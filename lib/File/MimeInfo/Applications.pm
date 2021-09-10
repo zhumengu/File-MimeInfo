@@ -137,6 +137,8 @@ sub _read_list { # read list with "mime/type=foo.desktop;bar.desktop" format
     my $succeeded;
 
     for my $file (@_) {
+        next unless defined $file;
+
         if (open LIST, '<', $file) {
             $succeeded = 1;
             while (<LIST>) {
