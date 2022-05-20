@@ -9,7 +9,7 @@ use File::MimeInfo qw/mimetype_canon mimetype_isa/;
 use File::DesktopEntry;
 require Exporter;
 
-our $VERSION = '0.30';
+our $VERSION = '0.32';
 
 our @ISA = qw(Exporter);
 our @EXPORT = qw(
@@ -101,8 +101,8 @@ sub _default {
     }
 
     $Carp::CarpLevel++;
-    my @list =
-    _read_list($mimetype, $user, $system, $deprecated, $distro, $legacy);
+    my @paths = grep defined, ($mimetype, $user, $system, $deprecated, $distro, $legacy);
+    my @list = _read_list(@paths);
     my $desktop_file = _find_file(reverse @list);
     $Carp::CarpLevel--;
 
@@ -308,7 +308,7 @@ F<$XDG_CONFIG_HOME/mimeapps.list>.
 =head1 AUTHOR
 
 Jaap Karssenberg E<lt>pardus@cpan.orgE<gt>
-Maintained by Michiel Beijen E<lt>michiel.beijen@gmail.comE<gt>
+Maintained by Michiel Beijen E<lt>mb@x14.nlE<gt>
 
 =head1 COPYRIGHT
 
